@@ -26,33 +26,33 @@ Esta base de datos está diseñada para gestionar la atención en una policlíni
 
 ### Tablas
 
-1. **PACIENTE**
+1. **Patients**
    - Almacena información sobre los pacientes que visitan la policlínica.
-   - Atributos: IDPACIENTE, NOMBRE, APELLIDO, FECHA_NACIMIENTO, GENERO, DIRECCION, TELEFONO, CORREO.
+   - Atributos: patient_id, first_name, last_name, birth_date, gender, address, phone, email.
 
-2. **MEDICO**
+2. **Doctors**
    - Contiene información sobre los médicos que atienden en la policlínica.
-   - Atributos: IDMEDICO, NOMBRE, APELLIDO, ESPECIALIDAD, LICENCIA, TELEFONO, CORREO.
+   - Atributos: doctor_id, first_name, last_name, speciality, licence_number, phone, email.
 
-3. **TECNICO**
+3. **Technicians**
    - Almacena datos sobre el personal técnico que asiste en la atención de pacientes.
-   - Atributos: IDTECNICO, NOMBRE, APELLIDO, TIPO_TECNICO, TELEFONO, CORREO.
+   - Atributos: technician_id, first_name, last_name, technician_type, phone, email.
 
-4. **CONSULTA_MEDICA**
+4. **Medical_Consults**
    - Registra las consultas médicas realizadas por los médicos.
-   - Atributos: IDCONSULTA_MEDICA, FECHA, HORA, IDPACIENTE, IDMEDICO, TIPO_CONSULTA.
+   - Atributos: medical_consult_id, medical_consult_date, medical_consult_time, patient_id, doctor_id, medical_consult_type.
 
-5. **CONSULTA_TECNICA**
+5. **Technical_Consults**
    - Registra las consultas técnicas realizadas por el personal técnico.
-   - Atributos: IDCONSULTA_TECNICA, FECHA, HORA, IDPACIENTE, IDTECNICO, NOTAS.
+   - Atributos: technical_consult_id, technical_consult_date, technical_consult_time, patient_id, technician_id, notes.
 
-6. **HISTORIAL_CLINICO**
+6. **Medical_Records**
    - Almacena el historial clínico de los pacientes.
-   - Atributos: IDHISTORIAL, IDPACIENTE, FECHA, DIAGNOSTICO, TRATAMIENTO, NOTAS.
+   - Atributos: record_id, patient_id, date, diagnosis, treatment, notes.
 
-7. **PAGO**
+7. **Payments**
    - Registra los pagos realizados por los pacientes.
-   - Atributos: IDPAGO, FECHA, MONTO, METODO_PAGO, IDCONSULTA_MEDICA, IDCONSULTA_TECNICA.
+   - Atributos: payment_id, date, amount, payment_method, medical_consult_id, technical_consult_id.
 
 ### Problemática Resuelta
 
