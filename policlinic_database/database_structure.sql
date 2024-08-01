@@ -1,14 +1,14 @@
 -- Eliminar la base de datos si existe y crearla nuevamente
-DROP DATABASE IF EXISTS Policlinica_DB;
+DROP DATABASE IF EXISTS policlinic_db;
 
 -- Crear la base de datos
-CREATE DATABASE Policlinica_DB;
+CREATE DATABASE policlinic_db;
 
 -- Seleccionar la base de datos
-USE Policlinica_DB;
+USE policlinic_db;
 
 -- Crear tabla Pacientes
-CREATE TABLE Patients (
+CREATE TABLE patients (
     patient_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     first_name VARCHAR(100) NOT NULL,
     last_name VARCHAR(100) NOT NULL,
@@ -21,7 +21,7 @@ CREATE TABLE Patients (
 );
 
 -- Crear tabla Medicos
-CREATE TABLE Doctors (
+CREATE TABLE doctors (
     doctor_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     first_name VARCHAR(100) NOT NULL,
     last_name VARCHAR(100) NOT NULL,
@@ -33,7 +33,7 @@ CREATE TABLE Doctors (
 );
 
 -- Crear tabla Tecnicos
-CREATE TABLE Technicians (
+CREATE TABLE technicians (
     technician_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     first_name VARCHAR(100) NOT NULL,
     last_name VARCHAR(100) NOT NULL,
@@ -44,7 +44,7 @@ CREATE TABLE Technicians (
 );
 
 -- Crear tabla Consultas Medicas
-CREATE TABLE Medical_Consults (
+CREATE TABLE medical_consults (
     medical_consult_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     medical_consult_date DATE NOT NULL,
     medical_consult_time TIME NOT NULL,
@@ -55,7 +55,7 @@ CREATE TABLE Medical_Consults (
 );
 
 -- Crear tabla Consultas Técnicas
-CREATE TABLE Technical_Consults (
+CREATE TABLE technical_consults (
     technical_consult_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     technical_consult_date DATE NOT NULL,
     technical_consult_time TIME NOT NULL,
@@ -66,7 +66,7 @@ CREATE TABLE Technical_Consults (
 );
 
 -- Crear tabla Historia Clinica
-CREATE TABLE Medical_Record (
+CREATE TABLE medical_record (
     record_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     patient_id INT UNSIGNED NOT NULL,
     consult_date DATE NOT NULL,
@@ -77,7 +77,7 @@ CREATE TABLE Medical_Record (
 );
 
 -- Crear tabla Pagos
-CREATE TABLE Payments (
+CREATE TABLE payments (
     payment_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     payment_date DATE NOT NULL,
     amount DECIMAL(10, 2) NOT NULL,
@@ -90,34 +90,34 @@ CREATE TABLE Payments (
 -- Definición de Claves Foráneas
 
 -- Consultas Médicas
-ALTER TABLE Medical_Consults
+ALTER TABLE medical_consults
 ADD CONSTRAINT FK_patient_medical_consult
 FOREIGN KEY (patient_id) REFERENCES Patients(patient_id);
 
-ALTER TABLE Medical_Consults
+ALTER TABLE medical_consults
 ADD CONSTRAINT FK_doctor_medical_consult
 FOREIGN KEY (doctor_id) REFERENCES Doctors(doctor_id);
 
 -- Consultas Técnicas
-ALTER TABLE Technical_Consults
+ALTER TABLE technical_consults
 ADD CONSTRAINT FK_patient_technical_consult
 FOREIGN KEY (patient_id) REFERENCES Patients(patient_id);
 
-ALTER TABLE Technical_Consults
+ALTER TABLE technical_consults
 ADD CONSTRAINT FK_technician_technical_consult
 FOREIGN KEY (technician_id) REFERENCES Technicians(technician_id);
 
 -- Historia Clínica
-ALTER TABLE Medical_Record
+ALTER TABLE medical_record
 ADD CONSTRAINT FK_patient_medical_record
 FOREIGN KEY (patient_id) REFERENCES Patients(patient_id);
 
 -- Pagos
-ALTER TABLE Payments
+ALTER TABLE payments
 ADD CONSTRAINT FK_med_consult_payment
 FOREIGN KEY (medical_consult_id) REFERENCES Medical_Consults(medical_consult_id);
 
-ALTER TABLE Payments
+ALTER TABLE payments
 ADD CONSTRAINT FK_tech_consult_payment
 FOREIGN KEY (technical_consult_id) REFERENCES Technical_Consults(technical_consult_id);
 
