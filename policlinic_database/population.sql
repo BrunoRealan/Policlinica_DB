@@ -1,5 +1,5 @@
 -- Población de la tabla Patients
-INSERT INTO patients (first_name, last_name, birth_date, gender, address, phone, email) 
+INSERT INTO PATIENTS (first_name, last_name, birth_date, gender, address, phone, email) 
 	VALUES 
 		('Juan', 'Pérez', '1985-06-15', 'M', 'Calle Falsa 123', '555-1234', 'juan.perez@example.com'),
 		('María', 'García', '1990-09-23', 'F', 'Avenida Siempreviva 456', '555-5678', 'maria.garcia@example.com'),
@@ -13,7 +13,7 @@ INSERT INTO patients (first_name, last_name, birth_date, gender, address, phone,
 		('Elena', 'Ramos', '1979-04-25', 'F', 'Calle 9 #76-88', '555-8765', 'elena.ramos@example.com');
 
 -- Población de la tabla Doctors
-INSERT INTO doctors (first_name, last_name, specialty, license_number, phone, email) 
+INSERT INTO DOCTORS (first_name, last_name, specialty, license_number, phone, email) 
 	VALUES 
 		('Andrés', 'Fernández', 'Cardiología', 'LIC123456', '555-1122', 'andres.fernandez@example.com'),
 		('Laura', 'Martín', 'Pediatría', 'LIC789012', '555-3344', 'laura.martin@example.com'),
@@ -27,7 +27,7 @@ INSERT INTO doctors (first_name, last_name, specialty, license_number, phone, em
 		('Luis', 'Núñez', 'Urología', 'LIC234567', '555-1123', 'luis.nunez@example.com');
 
 -- Población de la tabla Technicians
-INSERT INTO technicians (first_name, last_name, technician_type, phone, email) 
+INSERT INTO TECHINICIANS (first_name, last_name, technician_type, phone, email) 
 	VALUES 
 		('Ricardo', 'Muñoz', 'Técnico de Rayos X', '555-3345', 'ricardo.munoz@example.com'),
 		('Paula', 'Navarro', 'Técnico de Laboratorio', '555-5567', 'paula.navarro@example.com'),
@@ -41,7 +41,7 @@ INSERT INTO technicians (first_name, last_name, technician_type, phone, email)
 		('Raquel', 'Ruiz', 'Técnico de Patología', '555-2235', 'raquel.ruiz@example.com');
 
 -- Población de la tabla Medical_Consults
-INSERT INTO medical_consults (medical_consult_date, medical_consult_time, patient_id, doctor_id, medical_consult_type)
+INSERT INTO MEDICAL_CONSULTS (medical_consult_date, medical_consult_time, patient_id, doctor_id, medical_consult_type)
 	VALUES 
 		('2024-07-01', '10:00:00', 1, 1, 'General'),
 		('2024-07-02', '11:30:00', 2, 2, 'Especializado'),
@@ -55,7 +55,7 @@ INSERT INTO medical_consults (medical_consult_date, medical_consult_time, patien
 		('2024-07-10', '17:15:00', 10, 10, 'Especializado');
 
 -- Población de la tabla Technical_Consults
-INSERT INTO technical_consults (technical_consult_date, technical_consult_time, patient_id, technician_id, notes) 
+INSERT INTO TECHNICAL_CONSULTS (technical_consult_date, technical_consult_time, patient_id, technician_id, notes) 
 	VALUES 
 		('2024-07-01', '10:30:00', 1, 1, 'Radiografía de tórax realizada.'),
 		('2024-07-02', '12:00:00', 2, 2, 'Muestra de sangre recolectada.'),
@@ -69,7 +69,7 @@ INSERT INTO technical_consults (technical_consult_date, technical_consult_time, 
 		('2024-07-10', '17:30:00', 10, 10, 'Examen de patología completado.');
 
 -- Población de la tabla Medical_Record
-INSERT INTO medical_record (patient_id, consult_date, diagnosis, treatment, notes) 
+INSERT INTO MEDICAL_RECORDS (patient_id, consult_date, diagnosis, treatment, notes) 
 	VALUES 
 		(1, '2024-07-01', 'Hipertensión', 'Medicamento recetado', 'Paciente aconsejado sobre cambios en el estilo de vida.'),
 		(2, '2024-07-02', 'Alergias estacionales', 'Antihistamínicos recetados', 'Seguimiento en un mes.'),
@@ -83,7 +83,7 @@ INSERT INTO medical_record (patient_id, consult_date, diagnosis, treatment, note
 		(10, '2024-07-10', 'Hipertensión', 'Ajuste de medicación', 'Monitoreo diario de la presión arterial.');
 
 -- Población de la tabla Payments
-INSERT INTO payments (payment_date, amount, payment_method, medical_consult_id, technical_consult_id) 
+INSERT INTO PAYMENTS (payment_date, amount, payment_method, medical_consult_id, technical_consult_id) 
 	VALUES 
 		('2024-07-01', 100.00, 'Efectivo', 1, NULL),
 		('2024-07-02', 150.00, 'Credito', 2, 1),

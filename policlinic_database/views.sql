@@ -1,9 +1,8 @@
-USE policlinic_db;
-
+-- Eliminar vistas si existen
 DROP VIEW IF EXISTS patient_consultations;
 DROP VIEW IF EXISTS patient_payments;
 
--- Muestra todas las consultas médicas y técnicas asociadas a cada paciente.
+-- Muestra las consultas asociadas a cada paciente.
 DELIMITER //
 CREATE VIEW patient_consultations AS
 SELECT 
@@ -42,15 +41,16 @@ JOIN
 //
 DELIMITER ;
 
--- Muestra el total de pagos realizados por cada paciente, desglosado por consultas médicas y técnicas.
+-- Muestra los pagos totales realizados por cada paciente.
+
 DELIMITER //
 CREATE VIEW patient_payments AS
 SELECT 
     p.patient_id,
     CONCAT(p.first_name, ' ', p.last_name) AS patient_name,
-    COALESCE(SUM(CASE WHEN mc.medical_consult_id IS NOT NULL THEN py.amount ELSE 0 END), 0) AS total_medical_payments,
-    COALESCE(SUM(CASE WHEN tc.technical_consult_id IS NOT NULL THEN py.amount ELSE 0 END), 0) AS total_technical_payments,
-    COALESCE(SUM(py.amount), 0) AS total_payments
+    COALESCE(SUM(CASE WHEN py.medical_consult_id IS NOT NULL THEN py.amount ELSE 0 END), 0) AS total_medical_payments,
+    COALESCE(SUM(CASE WHEN py_tech.technical_consult_id IS NOT NULL THEN py_tech.amount ELSE 0 END), 0) AS total_technical_payments,
+    COALESCE(SUM(py.amount + py_tech.amount), 0) AS total_payments
 FROM 
     patients p
 LEFT JOIN 
@@ -58,7 +58,7 @@ LEFT JOIN
 LEFT JOIN 
     payments py ON py.medical_consult_id = mc.medical_consult_id
 LEFT JOIN 
-    technical_Consults tc ON tc.patient_id = p.patient_id
+    technical_consults tc ON tc.patient_id = p.patient_id
 LEFT JOIN 
     payments py_tech ON py_tech.technical_consult_id = tc.technical_consult_id
 GROUP BY 
