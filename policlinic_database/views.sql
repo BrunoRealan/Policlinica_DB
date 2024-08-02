@@ -42,25 +42,24 @@ JOIN
 DELIMITER ;
 
 -- Muestra los pagos totales realizados por cada paciente.
-
 DELIMITER //
 CREATE VIEW patient_payments AS
 SELECT 
     p.patient_id,
     CONCAT(p.first_name, ' ', p.last_name) AS patient_name,
     COALESCE(SUM(CASE WHEN py.medical_consult_id IS NOT NULL THEN py.amount ELSE 0 END), 0) AS total_medical_payments,
-    COALESCE(SUM(CASE WHEN py_tech.technical_consult_id IS NOT NULL THEN py_tech.amount ELSE 0 END), 0) AS total_technical_payments,
-    COALESCE(SUM(py.amount + py_tech.amount), 0) AS total_payments
+    COALESCE(SUM(CASE WHEN py.technical_consult_id IS NOT NULL THEN py.amount ELSE 0 END), 0) AS total_technical_payments,
+    COALESCE(SUM(py.amount), 0) AS total_payments
 FROM 
-    patients p
+    Patients p
 LEFT JOIN 
-    medical_consults mc ON mc.patient_id = p.patient_id
+    Medical_Consults mc ON mc.patient_id = p.patient_id
 LEFT JOIN 
-    payments py ON py.medical_consult_id = mc.medical_consult_id
+    Payments py ON py.medical_consult_id = mc.medical_consult_id
 LEFT JOIN 
-    technical_consults tc ON tc.patient_id = p.patient_id
+    Technical_Consults tc ON tc.patient_id = p.patient_id
 LEFT JOIN 
-    payments py_tech ON py_tech.technical_consult_id = tc.technical_consult_id
+    Payments py_tech ON py_tech.technical_consult_id = tc.technical_consult_id
 GROUP BY 
     p.patient_id;
 //
