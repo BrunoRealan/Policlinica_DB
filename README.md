@@ -22,37 +22,84 @@ Diseñar e implementar una base de datos relacional que cumpla con todas las nec
 
 ### Descripción de la Base de Datos - Sistema de Gestión de una Policlínica
 
-Esta base de datos está diseñada para gestionar la atención en una policlínica, así como la información relacionada con pacientes, personal médico y técnico, consultas y pagos. A continuación se detallan los elementos principales de la base de datos:
+Ésta base de datos está diseñada para gestionar la atención en una policlínica, así como la información relacionada con pacientes, personal médico y técnico, consultas y pagos. 
+
+### DER
+[Diagrama de Entidad Relación](https://github.com/BrunoRealan/Policlinica_DB/blob/main/Diagrama%20Policlinica.jpg)
 
 ### Tablas
 
-1. **Patients**
+1. **PATIENTS**
    - Almacena información sobre los pacientes que visitan la policlínica.
-   - Atributos: patient_id, first_name, last_name, birth_date, gender, address, phone, email.
+   - Atributos: patient_id (INT UNSIGNED NOT NULL AUTO_INCREMENT), first_name (VARCHAR(100) NOT NULL), last_name (VARCHAR(100) NOT NULL), birth_date (DATE NOT NULL), gender (ENUM('M', 'F', 'O') NOT NULL), address (VARCHAR(255)), phone (VARCHAR(20)), email (VARCHAR(255)).
 
-2. **Doctors**
+2. **DOCTORS**
    - Contiene información sobre los médicos que atienden en la policlínica.
-   - Atributos: doctor_id, first_name, last_name, speciality, licence_number, phone, email.
+   - Atributos: doctor_id (INT UNSIGNED NOT NULL AUTO_INCREMENT), first_name (VARCHAR(100) NOT NULL), last_name (VARCHAR(100) NOT NULL), speciality (specialty VARCHAR(100) NOT NULL), licence_number (VARCHAR(50) NOT NULL), phone (VARCHAR(20)), email (VARCHAR(255)).
 
-3. **Technicians**
+3. **TECHNICIANS**
    - Almacena datos sobre el personal técnico que asiste en la atención de pacientes.
-   - Atributos: technician_id, first_name, last_name, technician_type, phone, email.
+   - Atributos: technician_id (INT UNSIGNED NOT NULL AUTO_INCREMENT), first_name (VARCHAR(100) NOT NULL), last_name (VARCHAR(100) NOT NULL), technician_type (VARCHAR(100) NOT NULL), phone (VARCHAR(20)), email (VARCHAR(255)).
 
-4. **Medical_Consults**
+4. **MEDICAL_CONSULTS**
    - Registra las consultas médicas realizadas por los médicos.
-   - Atributos: medical_consult_id, medical_consult_date, medical_consult_time, patient_id, doctor_id, medical_consult_type.
+   - Atributos: medical_consult_id (INT UNSIGNED NOT NULL AUTO_INCREMENT), medical_consult_date (DATE NOT NULL), medical_consult_time (TIME NOT NULL), patient_id (INT UNSIGNED NOT NULL), doctor_id (INT UNSIGNED NOT NULL), medical_consult_type (ENUM('General', 'Especializado') NOT NULL).
+);
 
-5. **Technical_Consults**
+5. **TECHNICAL_CONSULTS**
    - Registra las consultas técnicas realizadas por el personal técnico.
-   - Atributos: technical_consult_id, technical_consult_date, technical_consult_time, patient_id, technician_id, notes.
+   - Atributos: technical_consult_id (INT UNSIGNED NOT NULL AUTO_INCREMENT), technical_consult_date (DATE NOT NULL), technical_consult_time (TIME NOT NULL), patient_id (INT UNSIGNED NOT NULL), technician_id (INT UNSIGNED NOT NULL), notes (TEXT).
 
-6. **Medical_Records**
+6. **MEDICAL_RECORDS**
    - Almacena el historial clínico de los pacientes.
-   - Atributos: record_id, patient_id, date, diagnosis, treatment, notes.
+   - Atributos: record_id (INT UNSIGNED NOT NULL AUTO_INCREMENT), patient_id (INT UNSIGNED NOT NULL), consult_date (DATE NOT NULL), diagnosis (TEXT NOT NULL), treatment (TEXT), notes (TEXT).
 
-7. **Payments**
+7. **PAYMENTS**
    - Registra los pagos realizados por los pacientes.
-   - Atributos: payment_id, date, amount, payment_method, medical_consult_id, technical_consult_id.
+   - Atributos: payment_id (INT UNSIGNED NOT NULL AUTO_INCREMENT), payment_date (DATE NOT NULL), amount (DECIMAL(10, 2) NOT NULL), payment_method (ENUM('Efectivo', 'Credito', 'Debito', 'Seguro') NOT NULL), medical_consult_id (INT UNSIGNED), technical_consult_id (INT UNSIGNED).
+
+8. **PATIENT_AUDIT**
+   - Registra la inserción y/o borrado de un paciente de la tabla PATIENTS en una tabla de auditoria.
+   - Atributos: audit_id (INT UNSIGNED NOT NULL AUTO_INCREMENT), patient_id (INT UNSIGNED), action (VARCHAR(50)), action_date (TIMESTAMP DEFAULT CURRENT_TIMESTAMP).
+
+
+### Relaciones y Claves Foráneas
+
+#### Consultas Médicas:
+patient_id en MEDICAL_CONSULTS es una clave foránea que referencia patient_id en PATIENTS.
+doctor_id en MEDICAL_CONSULTS es una clave foránea que referencia doctor_id en DOCTORS.
+
+#### Consultas Técnicas:
+patient_id en TECHNICAL_CONSULTS es una clave foránea que referencia patient_id en PATIENTS.
+technician_id en TECHNICAL_CONSULTS es una clave foránea que referencia technician_id en TECHNICIANS.
+
+#### Historia Clínica:
+patient_id en MEDICAL_RECORDS es una clave foránea que referencia patient_id en PATIENTS.
+
+#### Pagos:
+medical_consult_id en PAYMENTS es una clave foránea que referencia medical_consult_id en MEDICAL_CONSULTS.
+technical_consult_id en PAYMENTS es una clave foránea que referencia technical_consult_id en TECHNICAL_CONSULTS.
+
+### Vistas
+#### patient_consultations:
+Muestra las consultas médicas y técnicas asociadas a cada paciente.
+
+#### patient_payments:
+Muestra el total de pagos realizados por cada paciente, tanto para consultas médicas como técnicas.
+
+### Funciones
+#### get_total_payment:
+Calcula el total de pagos realizados por un paciente para consultas médicas y técnicas.
+
+#### patients_by_doctor:
+Calcula la cantidad de pacientes atendidos por un médico específico.
+
+### Procedimientos Almacenados
+#### insert_patient: 
+Inserta un nuevo paciente en la base de datos.
+
+#### get_patient_payments:
+Obtiene la información de los pagos realizados por un paciente.
 
 ### Problemática Resuelta
 
@@ -64,6 +111,3 @@ Esta base de datos permite gestionar eficientemente el proceso de atención en u
 - Registro de pagos realizados por las consultas.
 
 En resumen, esta base de datos proporciona una estructura para organizar y gestionar eficientemente las operaciones de una policlínica, contribuyendo a mejorar el servicio ofrecido a los pacientes y optimizar las operaciones de la policlínica.
-
-### DER
-[Diagrama de Entidad Relación](https://github.com/BrunoRealan/Policlinica_DB/blob/main/Diagrama%20Policlinica.jpg)
