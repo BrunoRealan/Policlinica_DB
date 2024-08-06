@@ -1,11 +1,9 @@
 ## Creación de una Base de Datos para una Policlínica
 
 ### Problema
-
 Nuestro equipo de desarrollo está trabajando en un sistema de gestión para una policlínica y necesita diseñar una base de datos que maneje eficientemente todas las operaciones relacionadas con la atención a los pacientes.
 
 ### Descripción del Problema
-
 1. **Gestión de Pacientes y Personal Médico**: Necesitamos una base de datos que registre información detallada sobre los pacientes que visitan la policlínica, así como sobre el personal médico y técnico que participa en su atención.
 
 2. **Administración de Consultas Médicas y Técnicas**: Es fundamental poder registrar y gestionar tanto las consultas médicas como las consultas técnicas realizadas en la policlínica.
@@ -15,20 +13,17 @@ Nuestro equipo de desarrollo está trabajando en un sistema de gestión para una
 4. **Manejo de Pagos**: Se requiere un sistema que registre los pagos efectuados por los pacientes por las consultas médicas y técnicas.
 
 ### Objetivo
-
 Diseñar e implementar una base de datos relacional que cumpla con todas las necesidades de gestión de una policlínica. La base de datos debe ser eficiente, escalable y fácil de mantener, permitiendo una gestión ágil y precisa de todas las operaciones relacionadas con la atención de los pacientes.
 
 ---
 
 ### Descripción de la Base de Datos - Sistema de Gestión de una Policlínica
-
 Ésta base de datos está diseñada para gestionar la atención en una policlínica, así como la información relacionada con pacientes, personal médico y técnico, consultas y pagos. 
 
 ### DER
 [Diagrama de Entidad Relación](https://github.com/BrunoRealan/Policlinica_DB/blob/main/Diagrama%20Policlinica.jpg)
 
 ### Tablas
-
 1. **PATIENTS**
    - Almacena información sobre los pacientes que visitan la policlínica.
    - Atributos: patient_id (INT UNSIGNED NOT NULL AUTO_INCREMENT), first_name (VARCHAR(100) NOT NULL), last_name (VARCHAR(100) NOT NULL), birth_date (DATE NOT NULL), gender (ENUM('M', 'F', 'O') NOT NULL), address (VARCHAR(255)), phone (VARCHAR(20)), email (VARCHAR(255)).
@@ -64,45 +59,49 @@ Diseñar e implementar una base de datos relacional que cumpla con todas las nec
 
 
 ### Relaciones y Claves Foráneas
-
 #### Consultas Médicas:
-patient_id en MEDICAL_CONSULTS es una clave foránea que referencia patient_id en PATIENTS.
-doctor_id en MEDICAL_CONSULTS es una clave foránea que referencia doctor_id en DOCTORS.
+- patient_id en MEDICAL_CONSULTS es una clave foránea que referencia patient_id en PATIENTS.
+- doctor_id en MEDICAL_CONSULTS es una clave foránea que referencia doctor_id en DOCTORS.
 
 #### Consultas Técnicas:
-patient_id en TECHNICAL_CONSULTS es una clave foránea que referencia patient_id en PATIENTS.
-technician_id en TECHNICAL_CONSULTS es una clave foránea que referencia technician_id en TECHNICIANS.
+- patient_id en TECHNICAL_CONSULTS es una clave foránea que referencia patient_id en PATIENTS.
+- technician_id en TECHNICAL_CONSULTS es una clave foránea que referencia technician_id en TECHNICIANS.
 
 #### Historia Clínica:
-patient_id en MEDICAL_RECORDS es una clave foránea que referencia patient_id en PATIENTS.
+- patient_id en MEDICAL_RECORDS es una clave foránea que referencia patient_id en PATIENTS.
 
 #### Pagos:
-medical_consult_id en PAYMENTS es una clave foránea que referencia medical_consult_id en MEDICAL_CONSULTS.
-technical_consult_id en PAYMENTS es una clave foránea que referencia technical_consult_id en TECHNICAL_CONSULTS.
+- medical_consult_id en PAYMENTS es una clave foránea que referencia medical_consult_id en MEDICAL_CONSULTS.
+- technical_consult_id en PAYMENTS es una clave foránea que referencia technical_consult_id en TECHNICAL_CONSULTS.
+
 
 ### Vistas
-#### patient_consultations:
+- #### patient_consultations:
 Muestra las consultas médicas y técnicas asociadas a cada paciente.
+```
+SELECT * FROM policlinic_db.patient_consultations;
+```
 
-#### patient_payments:
+- #### patient_payments:
 Muestra el total de pagos realizados por cada paciente, tanto para consultas médicas como técnicas.
 
 ### Funciones
-#### get_total_payment:
+- #### get_total_payment:
 Calcula el total de pagos realizados por un paciente para consultas médicas y técnicas.
 
-#### patients_by_doctor:
+- #### patients_by_doctor:
 Calcula la cantidad de pacientes atendidos por un médico específico.
 
+
 ### Procedimientos Almacenados
-#### insert_patient: 
+- #### insert_patient: 
 Inserta un nuevo paciente en la base de datos.
 
-#### get_patient_payments:
+- #### get_patient_payments:
 Obtiene la información de los pagos realizados por un paciente.
 
-### Problemática Resuelta
 
+### Problemática Resuelta
 Esta base de datos permite gestionar eficientemente el proceso de atención en una policlínica, desde la información de los pacientes y el personal hasta el registro de consultas y pagos. Algunos aspectos que aborda incluyen:
 
 - Registro de pacientes y personal involucrado en la atención.
