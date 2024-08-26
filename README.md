@@ -86,6 +86,20 @@ Diseñar e implementar una base de datos relacional que cumpla con todas las nec
 
 ### Vistas
 
+- #### doctor_consultation_quantity:
+Muestra las cantidad de consultas por médico hasta la fecha.
+Ejemplo:
+```
+SELECT * FROM policlinic_db.doctor_consultation_quantity;
+```
+
+- #### technician_consultation_quantity:
+Muestra las cantidad de consultas por técnico hasta la fecha.
+Ejemplo:
+```
+SELECT * FROM policlinic_db.technician_consultation_quantity;
+```
+
 - #### patient_consultations:
 Muestra las consultas médicas y técnicas asociadas a cada paciente.
 Ejemplo:

@@ -1,6 +1,40 @@
 -- Eliminar vistas si existen
+DROP VIEW IF EXISTS doctor_consultation_quantity;
+DROP VIEW IF EXISTS technician_consultation_quantity;
 DROP VIEW IF EXISTS patient_consultations;
 DROP VIEW IF EXISTS patient_payments;
+
+-- Muestra número de consultas por médico
+DELIMITER //
+CREATE VIEW doctor_consultation_quantity AS
+SELECT 
+    d.doctor_id,
+    CONCAT(d.first_name, ' ', d.last_name) AS doctor_name,
+    COUNT(mc.medical_consult_id) AS total_consults
+FROM 
+    doctors d
+LEFT JOIN 
+    medical_consults mc ON d.doctor_id = mc.doctor_id
+GROUP BY 
+    d.doctor_id;
+//
+DELIMITER ;
+
+-- Muestra número de consultas por técnico
+DELIMITER //
+CREATE VIEW technician_consultation_quantity AS
+SELECT 
+    t.technician_id,
+    CONCAT(t.first_name, ' ', t.last_name) AS technician_name,
+    COUNT(tc.technical_consult_id) AS total_consults
+FROM 
+    technicians t
+LEFT JOIN 
+    technical_consults tc ON t.technician_id = tc.technician_id
+GROUP BY 
+    t.technician_id;
+//
+DELIMITER ;
 
 -- Muestra las consultas asociadas a cada paciente.
 DELIMITER //
@@ -47,20 +81,30 @@ CREATE VIEW patient_payments AS
 SELECT 
     p.patient_id,
     CONCAT(p.first_name, ' ', p.last_name) AS patient_name,
-    COALESCE(SUM(CASE WHEN py.medical_consult_id IS NOT NULL THEN py.amount ELSE 0 END), 0) AS total_medical_payments,
-    COALESCE(SUM(CASE WHEN py.technical_consult_id IS NOT NULL THEN py.amount ELSE 0 END), 0) AS total_technical_payments,
-    COALESCE(SUM(py.amount), 0) AS total_payments
+    COALESCE(medical.total_medical_payments, 0) AS total_medical_payments,
+    COALESCE(tech.total_technical_payments, 0) AS total_technical_payments,
+    COALESCE(medical.total_medical_payments, 0) + COALESCE(tech.total_technical_payments, 0) AS total_payments
 FROM 
     Patients p
 LEFT JOIN 
-    Medical_Consults mc ON mc.patient_id = p.patient_id
+    (SELECT 
+         mc.patient_id, 
+         SUM(py.amount) AS total_medical_payments
+     FROM 
+         Medical_Consults mc
+     LEFT JOIN 
+         Payments py ON py.medical_consult_id = mc.medical_consult_id
+     GROUP BY 
+         mc.patient_id) medical ON medical.patient_id = p.patient_id
 LEFT JOIN 
-    Payments py ON py.medical_consult_id = mc.medical_consult_id
-LEFT JOIN 
-    Technical_Consults tc ON tc.patient_id = p.patient_id
-LEFT JOIN 
-    Payments py_tech ON py_tech.technical_consult_id = tc.technical_consult_id
-GROUP BY 
-    p.patient_id;
+    (SELECT 
+         tc.patient_id, 
+         SUM(py_tech.amount) AS total_technical_payments
+     FROM 
+         Technical_Consults tc
+     LEFT JOIN 
+         Payments py_tech ON py_tech.technical_consult_id = tc.technical_consult_id
+     GROUP BY 
+         tc.patient_id) tech ON tech.patient_id = p.patient_id;
 //
 DELIMITER ;

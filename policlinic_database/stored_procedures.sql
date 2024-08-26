@@ -1,3 +1,9 @@
+USE policlinic_db;
+
+--Eliminar procedimientops si existen
+DROP PROCEDURE IF EXISTS insert_patient;
+DROP PROCEDURE IF EXISTS get_patient_payments;
+
 -- Procedimiento que inserta un nuevo registro paciente en la tabla PATIENTS
 DELIMITER //
 CREATE PROCEDURE insert_patient(

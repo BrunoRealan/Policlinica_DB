@@ -1,3 +1,9 @@
+USE policlinic_db;
+
+-- Eliminar triggers si existen
+DROP TRIGGER IF EXISTS patient_insert_audit;
+DROP TRIGGER IF EXISTS patient_delete_audit;
+
 -- Crea la tabla de auditoría si no existe
 CREATE TABLE IF NOT EXISTS PATIENT_AUDIT (
     audit_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
