@@ -1,6 +1,6 @@
 USE policlinic_db;
 
---Eliminar funciones si existen
+-- Eliminar funciones si existen
 DROP FUNCTION IF EXISTS get_total_payment;
 DROP FUNCTION IF EXISTS patients_by_doctor;
 
@@ -40,12 +40,10 @@ BEGIN
     -- Retornar el total de pagos
     RETURN total_payments;
 END //
-
 DELIMITER ;
 
 -- Función para ver cuantos pacientes atendió un doctor
 DELIMITER //
-
 CREATE FUNCTION patients_by_doctor(p_doctor_id INT)
 RETURNS INT
 DETERMINISTIC
@@ -59,5 +57,4 @@ BEGIN
 
     RETURN patient_count;
 END //
-
 DELIMITER ;

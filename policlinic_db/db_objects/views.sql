@@ -1,3 +1,5 @@
+USE policlinic_db;
+
 -- Eliminar vistas si existen
 DROP VIEW IF EXISTS doctor_consultation_quantity;
 DROP VIEW IF EXISTS technician_consultation_quantity;

@@ -1,6 +1,6 @@
 USE policlinic_db;
 
---Eliminar procedimientops si existen
+-- Eliminar procedimientos si existen
 DROP PROCEDURE IF EXISTS insert_patient;
 DROP PROCEDURE IF EXISTS get_patient_payments;
 
@@ -58,4 +58,3 @@ BEGIN
         p.patient_id;
 END //
 DELIMITER ;
-
