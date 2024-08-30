@@ -46,7 +46,6 @@ Diseñar e implementar una base de datos relacional que cumpla con todas las nec
 4. **MEDICAL_CONSULTS**
    - Registra las consultas médicas realizadas por los médicos.
    - Atributos: medical_consult_id (INT UNSIGNED NOT NULL AUTO_INCREMENT), medical_consult_date (DATE NOT NULL), medical_consult_time (TIME NOT NULL), patient_id (INT UNSIGNED NOT NULL), doctor_id (INT UNSIGNED NOT NULL), medical_consult_type (ENUM('General', 'Especializado') NOT NULL).
-);
 
 5. **TECHNICAL_CONSULTS**
    - Registra las consultas técnicas realizadas por el personal técnico.
@@ -144,7 +143,7 @@ CALL insert_patient ('Tito', 'Puentes', '1950-04-25', 'M', 'Calle 998', '555-876
 Obtiene la información de los pagos realizados por un paciente.
 Ejemplo:
 ```
-CALL get_patient_payments (1);
+CALL get_patient_payments (6);
 ```
 
 ### Triggers
